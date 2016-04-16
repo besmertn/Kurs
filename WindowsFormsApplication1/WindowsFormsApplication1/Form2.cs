@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             m_parent = frm1;
-            label1.Text = m_parent.textBox1.Text;
+            //label1.Text = m_parent.textBox1.Text;
 
         }
 

@@ -29,125 +29,139 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.sMPDataSet3 = new WindowsFormsApplication1.SMPDataSet3();
-            this.notesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.notesTableAdapter = new WindowsFormsApplication1.SMPDataSet3TableAdapters.notesTableAdapter();
-            this.noteidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.useridDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.measure = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kursDataSet = new WindowsFormsApplication1.KursDataSet();
+            this.goodsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.goodsTableAdapter = new WindowsFormsApplication1.KursDataSetTableAdapters.goodsTableAdapter();
+            this.barcodeSearchText = new System.Windows.Forms.TextBox();
+            this.search = new System.Windows.Forms.Button();
+            this.summLabel = new System.Windows.Forms.Label();
+            this.buyButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sMPDataSet3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kursDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodsBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(525, 104);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(675, 50);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(126, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.noteidDataGridViewTextBoxColumn,
-            this.titleDataGridViewTextBoxColumn,
-            this.contentDataGridViewTextBoxColumn,
-            this.dateDataGridViewTextBoxColumn,
-            this.useridDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.notesBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(30, 179);
+            this.barcode,
+            this.name,
+            this.measure,
+            this.count,
+            this.price});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 63);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(570, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(748, 150);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
-            // sMPDataSet3
+            // barcode
             // 
-            this.sMPDataSet3.DataSetName = "SMPDataSet3";
-            this.sMPDataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.barcode.HeaderText = "Код товара";
+            this.barcode.Name = "barcode";
+            this.barcode.ReadOnly = true;
+            this.barcode.Width = 150;
             // 
-            // notesBindingSource
+            // name
             // 
-            this.notesBindingSource.DataMember = "notes";
-            this.notesBindingSource.DataSource = this.sMPDataSet3;
+            this.name.HeaderText = "Наименование";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.Width = 200;
             // 
-            // notesTableAdapter
+            // measure
             // 
-            this.notesTableAdapter.ClearBeforeFill = true;
+            this.measure.HeaderText = "Еденица измерения";
+            this.measure.Name = "measure";
+            this.measure.ReadOnly = true;
             // 
-            // noteidDataGridViewTextBoxColumn
+            // count
             // 
-            this.noteidDataGridViewTextBoxColumn.DataPropertyName = "note_id";
-            this.noteidDataGridViewTextBoxColumn.HeaderText = "note_id";
-            this.noteidDataGridViewTextBoxColumn.Name = "noteidDataGridViewTextBoxColumn";
+            this.count.HeaderText = "Количество";
+            this.count.Name = "count";
             // 
-            // titleDataGridViewTextBoxColumn
+            // price
             // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "title";
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            this.price.HeaderText = "Цена за еденицу";
+            this.price.Name = "price";
+            this.price.ReadOnly = true;
             // 
-            // contentDataGridViewTextBoxColumn
+            // kursDataSet
             // 
-            this.contentDataGridViewTextBoxColumn.DataPropertyName = "content";
-            this.contentDataGridViewTextBoxColumn.HeaderText = "content";
-            this.contentDataGridViewTextBoxColumn.Name = "contentDataGridViewTextBoxColumn";
+            this.kursDataSet.DataSetName = "KursDataSet";
+            this.kursDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // dateDataGridViewTextBoxColumn
+            // goodsBindingSource
             // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "date";
-            this.dateDataGridViewTextBoxColumn.HeaderText = "date";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            this.goodsBindingSource.DataMember = "goods";
+            this.goodsBindingSource.DataSource = this.kursDataSet;
             // 
-            // useridDataGridViewTextBoxColumn
+            // goodsTableAdapter
             // 
-            this.useridDataGridViewTextBoxColumn.DataPropertyName = "user_id";
-            this.useridDataGridViewTextBoxColumn.HeaderText = "user_id";
-            this.useridDataGridViewTextBoxColumn.Name = "useridDataGridViewTextBoxColumn";
+            this.goodsTableAdapter.ClearBeforeFill = true;
+            // 
+            // barcodeSearchText
+            // 
+            this.barcodeSearchText.Location = new System.Drawing.Point(12, 21);
+            this.barcodeSearchText.Name = "barcodeSearchText";
+            this.barcodeSearchText.Size = new System.Drawing.Size(174, 20);
+            this.barcodeSearchText.TabIndex = 5;
+            // 
+            // search
+            // 
+            this.search.Location = new System.Drawing.Point(217, 21);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(75, 23);
+            this.search.TabIndex = 6;
+            this.search.Text = "Search";
+            this.search.UseVisualStyleBackColor = true;
+            this.search.Click += new System.EventHandler(this.search_Click);
+            // 
+            // summLabel
+            // 
+            this.summLabel.AutoSize = true;
+            this.summLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.summLabel.Location = new System.Drawing.Point(179, 247);
+            this.summLabel.Name = "summLabel";
+            this.summLabel.Size = new System.Drawing.Size(92, 24);
+            this.summLabel.TabIndex = 7;
+            this.summLabel.Text = "Summ: 0";
+            // 
+            // buyButton
+            // 
+            this.buyButton.Location = new System.Drawing.Point(542, 247);
+            this.buyButton.Name = "buyButton";
+            this.buyButton.Size = new System.Drawing.Size(75, 23);
+            this.buyButton.TabIndex = 8;
+            this.buyButton.Text = "Buy";
+            this.buyButton.UseVisualStyleBackColor = true;
+            this.buyButton.Click += new System.EventHandler(this.buyButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(948, 489);
+            this.Controls.Add(this.buyButton);
+            this.Controls.Add(this.summLabel);
+            this.Controls.Add(this.search);
+            this.Controls.Add(this.barcodeSearchText);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sMPDataSet3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kursDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,18 +169,19 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        public System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private SMPDataSet3 sMPDataSet3;
-        private System.Windows.Forms.BindingSource notesBindingSource;
-        private SMPDataSet3TableAdapters.notesTableAdapter notesTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noteidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn useridDataGridViewTextBoxColumn;
+        private KursDataSet kursDataSet;
+        private System.Windows.Forms.BindingSource goodsBindingSource;
+        private KursDataSetTableAdapters.goodsTableAdapter goodsTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn measure;
+        private System.Windows.Forms.DataGridViewTextBoxColumn count;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price;
+        private System.Windows.Forms.TextBox barcodeSearchText;
+        private System.Windows.Forms.Button search;
+        private System.Windows.Forms.Label summLabel;
+        private System.Windows.Forms.Button buyButton;
 
 
 

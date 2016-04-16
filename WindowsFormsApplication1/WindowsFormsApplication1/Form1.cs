@@ -13,24 +13,24 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        //DBControl a = new DBControl();
-        
-        public Form1()
+        GoodsDBControl goodsBase = new GoodsDBControl();
+        double summ = 0;
+
+        private void changeSumm()
         {
-         
-            
-            InitializeComponent();
-            //a.Query("CREATE TABLE goodsBase (id INTEGER PRIMARY KEY, name CHAR, measure CHAR, count INTEGER, price DOUBLE UNSIGNED, last CHAR);");           
-            /*SQLiteDataAdapter b = a.main();
-            using (DataTable dt = new DataTable())
+            summ = 0;
+            int rowCounter = dataGridView1.Rows.Count;
+            for (int i = 0; i < rowCounter - 1; i++)
             {
-                  b.Fill(dt);
-                  dataGridView1.DataSource = dt;
-                  
-            }*/
-    
-           
-           
+                summ += Convert.ToInt16(dataGridView1.Rows[i].Cells[3].Value) * Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+            }
+            summLabel.Text = "Summ: " + summ.ToString();
+        }
+        public Form1(Authorize parent)
+        {
+
+            Authorize parentForm = parent;
+            InitializeComponent(); 
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -48,37 +48,51 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "sMPDataSet3.notes". При необходимости она может быть перемещена или удалена.
-            this.notesTableAdapter.Fill(this.sMPDataSet3.notes);
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "kursDataSet.goods". При необходимости она может быть перемещена или удалена.
+            this.goodsTableAdapter.Fill(this.kursDataSet.goods);
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            String query = "";
-            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+            changeSumm();
+        }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+            string[] data = goodsBase.goodsSearch(barcodeSearchText.Text);
+            int rowCounter = dataGridView1.Rows.Count;
+            dataGridView1.Rows.Insert(0, 1);
+            dataGridView1.Rows[0].SetValues(data[0], data[1], data[2],1,data[3]);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit(e);
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int currentRowIndex =  dataGridView1.CurrentRow.Index;
+            dataGridView1.Rows.RemoveAt(currentRowIndex);
+            changeSumm();
+        }
+
+        private void buyButton_Click(object sender, EventArgs e)
+        {
+            int rowCounter = dataGridView1.Rows.Count;
+            string[,] data = new string[rowCounter,5];
+            for (int i = 0; i < rowCounter - 1; i++)
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;persistsecurityinfo=True;database=SMP");
-                connection.Open();
-                MySqlCommand command = new MySqlCommand("SELECT * FROM users WHERE user_id=11", connection);
-                MySqlDataAdapter sqlda = new MySqlDataAdapter(command);
-                query = "UPDATE example SET value = '" + dataGridView1.Rows[i].Cells[1].Value + "' WHERE id=" + dataGridView1.Rows[i].Cells[0].Value + ";";
-                using (DataTable dt = new DataTable())
+                for (int j = 0; j < 5; j++)
                 {
-                    sqlda.Fill(dt);
-                    dataGridView1.DataSource = dt;
-
+                    data[i , j] = dataGridView1.Rows[i].Cells[j].Value.ToString();
                 }
-                connection.Close();
+                
             }
+            goodsBase.buyUpdate(data, rowCounter - 1);
         }
-
-            
-
-        }
-
-       
-
-
-       
+     
     }
+    
+}
 
