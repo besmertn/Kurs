@@ -9,6 +9,7 @@ namespace WindowsFormsApplication1
 {
     class GoodsDBControl : DBControl
     {
+        private string[] pastDueGoodsArr;
         public string[] goodsSearch(string barcode) {
             string[] result = new string[4];
             MySqlDataReader reader = readFrom("goods");
@@ -29,6 +30,23 @@ namespace WindowsFormsApplication1
                 query = "UPDATE `goods` SET `count` = `count`-" + data[i, 3] + " WHERE `barcode`=" + data[i, 0];
                 Query(query);
             }
+        }
+
+        public string[] shelflifeControl() {
+            MySqlDataReader reader = readFrom("goods");
+            int pastDueGoodsCounter = 0;
+            while (reader.Read())
+            {
+               if(reader.GetDateTime("shelflife").CompareTo(DateTime.Now) <= 0)pastDueGoodsCounter++;
+            }
+            pastDueGoodsArr = new string[pastDueGoodsCounter];
+            pastDueGoodsCounter = 0;
+            reader = readFrom("goods");
+            while (reader.Read())
+            {
+                if (reader.GetDateTime("shelflife").CompareTo(DateTime.Now) <= 0) pastDueGoodsArr[pastDueGoodsCounter++] = reader.GetValue(0).ToString();
+            }
+            return pastDueGoodsArr;
         }
     }
 }

@@ -91,6 +91,12 @@ namespace WindowsFormsApplication1
             }
             goodsBase.buyUpdate(data, rowCounter - 1);
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            string[] tmp = goodsBase.shelflifeControl();
+            label1.Text = tmp[0];
+        }
      
     }
     
