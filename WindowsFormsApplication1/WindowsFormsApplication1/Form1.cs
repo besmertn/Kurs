@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 
 namespace WindowsFormsApplication1
 {
+
     public partial class Form1 : Form
     {
         GoodsDBControl goodsBase = new GoodsDBControl();
@@ -44,13 +45,8 @@ namespace WindowsFormsApplication1
                 query = "UPDATE example SET value = '" + dataGridView1.Rows[i].Cells[1].Value + "' WHERE id=" + dataGridView1.Rows[i].Cells[0].Value + ";";
                 
                 a.Query(query);*/
+            
             }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "kursDataSet.goods". При необходимости она может быть перемещена или удалена.
-            this.goodsTableAdapter.Fill(this.kursDataSet.goods);
-        }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -96,6 +92,13 @@ namespace WindowsFormsApplication1
         {
             string[] tmp = goodsBase.shelflifeControl();
             label1.Text = tmp[0];
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            this.Hide();
+            form2.ShowDialog();
         }
      
     }
