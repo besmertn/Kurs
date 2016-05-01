@@ -10,88 +10,91 @@ namespace WindowsFormsApplication1
 {
     class GoodsDBControl : DBControl
     {
-        private string[] pastDueGoodsArr;
+        Dictionary<string, Goods> goods = new Dictionary<string, Goods>();
         CultureInfo clt = new CultureInfo("ja-JP");
-        public string[] goodsSearch(string barcode) {
-            string[] result = new string[4];
-            MySqlDataReader reader = readFrom("goods");
-            while (reader.Read()) { 
-                if(reader.GetValue(0).ToString().Equals(barcode)){
-                    result[0] = reader.GetValue(0).ToString();
-                    result[1] = reader.GetValue(1).ToString();
-                    result[2] = reader.GetValue(2).ToString();
-                    result[3] = reader.GetValue(4).ToString();
-                }
-            }
-            return result;
-        }
-
-        public void buyUpdate(string[,] data, int length) {
-            string query = "";
-            for (int i = 0; i < length; i++) {
-                query = "UPDATE `goods` SET `count` = `count`-" + data[i, 3] + " WHERE `barcode`=" + data[i, 0];
-                Query(query);
+        protected void fillingList(string from)
+        {
+            MySqlDataReader reader = new DBControl().readFrom(from);
+            while (reader.Read()) {
+                goods.Add(reader.GetInt32("barcode").ToString(), new Goods(reader.GetInt32("barcode").ToString()
+                    , reader.GetString("name")
+                    , reader.GetString("measure")
+                    , reader.GetInt32("count")
+                    , reader.GetFloat("price")
+                    , reader.GetDateTime("lastdelivery")
+                    , reader.GetDateTime("shelflife")));
             }
         }
 
-        public string[] shelflifeControl() {
-            MySqlDataReader reader = readFrom("goods");
-            int pastDueGoodsCounter = 0;
-            string query = "";
-            while (reader.Read())
-            {
-               if(reader.GetDateTime("shelflife").CompareTo(DateTime.Now) <= 0)pastDueGoodsCounter++;
-            }
-            pastDueGoodsArr = new string[pastDueGoodsCounter];
-            pastDueGoodsCounter = 0;
-            reader = readFrom("goods");
-            while (reader.Read())
-            {
-                if (reader.GetDateTime("shelflife").CompareTo(DateTime.Now) <= 0) pastDueGoodsArr[pastDueGoodsCounter++] = reader.GetValue(0).ToString();
-            }
-            reader = readFrom("goods");
-            int i = 0;
-            while (reader.Read())
-            {
-                if (reader.GetValue(0).ToString().Equals(pastDueGoodsArr[i]))
-                {
-                    try
-                    {
-                        query = "INSERT INTO `Kurs`.`stitchedgoods` (`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES (" + reader.GetValue(0).ToString() + ", '" + reader.GetValue(1).ToString() + "', '" + reader.GetValue(2).ToString() + "', '" + reader.GetValue(3).ToString() + "', '" + reader.GetValue(4).ToString() + "', '" + reader.GetDateTime("shelflife").ToString("d",clt) + "')";
-                        Query(query);
-                        query = "DELETE FROM `Kurs`.`goods` WHERE `goods`.`barcode` = " + pastDueGoodsArr[i] + ";";
-                        Query(query);
-                    }
-                    catch { 
-                        
-                    }
-                    i++;
-                    if (i == pastDueGoodsArr.Length) break;
-
-                }
-            }
-            return pastDueGoodsArr;
+        public Goods searchGoods(string requiredBarcode) {
+            return goods[requiredBarcode];
         }
 
-        public void newDelivery(string[,] data , int length) {
-            string query = "";
-            for (int i = 0; i < length; i++) {
-                /*query = "INSERT INTO `Kurs`.`goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES (" + data[i, 0] + ", '" + data[i, 1] + "', '" + data[i, 2] + "', '" + data[i, 3] + "', '" + data[i, 4] + "', '" + DateTime.Now + "', '" + data[i, 5] + "')";
-                if (QueryBool(query) == 0) { 
-                    query = "UPDATE `Kurs`.`goods` SET `count` = '" + data[i, 3] + "', `price` = '" + data[i, 4] + "' ,`lastdelivery='"+ DateTime.Now +"'`, `shelflife`= '" + data[i, 5] + "' WHERE `goods`.`barcode` = " + data[i, 0];
-                    Query(query);
-                }*/
-
+        public void buyGoods(List<Goods> purchase) { 
+            foreach(Goods product in purchase){
+                goods[product.Barcode] -= product;
+                Query("UPDATE `goods` SET `count` =  `count`-" + product.Count + " WHERE `barcode`= " + product.Barcode + " ;");
+            }
+        }
+        public List<Goods> shelfLifeControl() {
+            Dictionary<string, Goods> tmpGoodsDictionary = goods.Where(x => x.Value.ShelfLife.CompareTo(DateTime.Now) <= 0).ToDictionary(key => key.Key , value => value.Value);
+            List<Goods> pastDueGoods = tmpGoodsDictionary.Values.ToList();
+            foreach(Goods product in pastDueGoods){
                 try
                 {
-                    query = "INSERT INTO `Kurs`.`goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES (" + data[i, 0] + ", '" + data[i, 1] + "', '" + data[i, 2] + "', '" + data[i, 3] + "', '" + data[i, 4] + "', '" + DateTime.Now.ToString("d", clt) + "', '" + Convert.ToDateTime(data[i, 5]).ToString("d", clt) + "')";
-                    Query(query);
+                    Query("DELETE FROM `Kurs`.`goods` WHERE `goods`.`barcode` = " + product.Barcode + ";");
+                    goods.Remove(product.Barcode);
+                    Query("INSERT INTO `stitchedgoods`(`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES(" + product.Barcode + ", '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + product.ShelfLife.ToString("d", clt) + "')");
                 }
-                catch {
-                    query = "UPDATE `Kurs`.`goods` SET `count` = '" + data[i, 3] + "', `price` = '" + data[i, 4] + "' ,`lastdelivery`='" + DateTime.Now.ToString("d", clt) + "', `shelflife`= '" + Convert.ToDateTime(data[i, 5]).ToString("d", clt) + "' WHERE `goods`.`barcode` = " + data[i, 0];
-                    Query(query);
-                }/*CultureInfo.CreateSpecificCulture("ja-JP")*/
+                catch (MySqlException e) {
+                    if (e.ErrorCode == 1062)
+                    {
+                        Query("INSERT INTO `stitchedgoods`(`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES(NULL, '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + product.ShelfLife.ToString("d", clt) + "')");
+                    }
+                }
             }
+            return pastDueGoods;
         }
+
+        public Boolean newDelivery(List<Goods> delivery) {
+            foreach (Goods product in delivery) {
+                
+                try
+                {
+                    Query("INSERT INTO `goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES('" + product.Barcode + "', '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + DateTime.Now.ToString("d", clt) + "', '" + product.ShelfLife.ToString("d", clt) + "')");
+                    goods.Add(product.Barcode, new Goods(product.Barcode
+                        , product.Name
+                        , product.Measure
+                        , product.Count
+                        , product.Price
+                        , product.LastDelivery
+                        , product.ShelfLife));
+                }
+                catch (MySqlException e)
+                {
+                    if (e.ErrorCode == 1062)
+                    {
+                        Query("INSERT INTO `Kurs`.`goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES(NULL, '" +
+                            product.Name + "', '" + product.Measure + "'), '" +
+                            product.Count + "', '" + product.Price + "', '" +
+                            DateTime.Now.ToString("d", clt) + "', '" +
+                            product.ShelfLife.ToString("d", clt) + "'");
+                        goods.Clear();
+                        fillingList("goods");
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public Dictionary<string, Goods> createGoodsList() {
+            fillingList("goods");
+            return goods;
+        }
+        
     }
 }

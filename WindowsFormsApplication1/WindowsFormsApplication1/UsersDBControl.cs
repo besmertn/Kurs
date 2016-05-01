@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1
     {
         protected MD5 md5Hash = MD5.Create();
       
-        private void ubdateUsersDB()
+        public void updateUsersDB()
         {
             string path = @"D:\Git\WindowsFormsApplication1\usersDB.txt";
 
@@ -28,8 +28,19 @@ namespace WindowsFormsApplication1
                     int len = s.Length;
                     login = s.Substring(0, inx);
                     hash = s.Substring(inx + 1, len - inx - 2);
-                    string query = "INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`) VALUES (NULL,'" + login + "', '" + hash + "')";
-                    this.Query(query);
+                    try
+                    {
+                        string query = "INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`) VALUES (NULL,'" + login + "', '" + hash + "')";
+                        this.Query(query);
+                    }
+                    catch
+                    {
+                        string query = "UPDATE `Kurs`.`users` SET `password`='" + hash + "' WHERE `login` = '" + login + "';";
+                        this.Query(query);
+                    }
+
+
+
                 }
             }
         }
