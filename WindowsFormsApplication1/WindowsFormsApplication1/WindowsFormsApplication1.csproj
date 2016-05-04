@@ -92,6 +92,7 @@
     <Compile Include="CalendarColumn.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ChecksControl.cs" />
     <Compile Include="Goods.cs" />
     <Compile Include="KursDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -16,6 +16,7 @@ namespace WindowsFormsApplication1
         
         public StitchedGoodsForm()
         {
+            stitchedGoodsControl.shelfLifeControl();
             InitializeComponent();
             foreach (Goods product in stitchedGoodsControl.getAllStitchedGoods()) {
                 dataGridView1.Rows.Insert(0, 1);
@@ -31,7 +32,11 @@ namespace WindowsFormsApplication1
         {
             List<string> barcodes = new List<string>();
             foreach (DataGridViewRow Row in dataGridView1.Rows) {
-                if (Row.Selected) barcodes.Add(Row.Cells[0].Value.ToString());
+                if (Row.Selected)
+                {
+                    barcodes.Add(Row.Cells[0].Value.ToString());
+                    dataGridView1.Rows.Remove(Row);
+                }
             }
             stitchedGoodsControl.RemoveStitchedGoods(barcodes);
         }

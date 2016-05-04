@@ -12,10 +12,10 @@ namespace WindowsFormsApplication1
     class UsersDBControl : DBControl
     {
         protected MD5 md5Hash = MD5.Create();
-      
+        public int cashRegisterNumber{set; get;}
         public void updateUsersDB()
         {
-            string path = @"D:\Git\WindowsFormsApplication1\usersDB.txt";
+            string path = @"usersDB.txt";
 
             using (StreamReader sr = File.OpenText(path))
             {
@@ -30,7 +30,7 @@ namespace WindowsFormsApplication1
                     hash = s.Substring(inx + 1, len - inx - 2);
                     try
                     {
-                        string query = "INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`) VALUES (NULL,'" + login + "', '" + hash + "')";
+                        string query = "INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`,``cashregisternumber) VALUES (NULL,'" + login + "', '" + hash + "', NULL)";
                         this.Query(query);
                     }
                     catch
@@ -87,7 +87,7 @@ namespace WindowsFormsApplication1
 
         private void addUser(string login, string password)
         {
-            string path = @"D:\Git\WindowsFormsApplication1\usersDB.txt";
+            string path = @"usersDB.txt";
 
             string hash = "";
             using (md5Hash)
@@ -108,8 +108,18 @@ namespace WindowsFormsApplication1
             {
                 while (reader.Read())
                 {
+                    try
+                    {
+                        Query("INSERT INTO `checkcounter`(`cashregisternumber`, `checkcounter`) VALUES(" + reader.GetInt32("cashregisternumber") + ", 0)");
+                    }
+                    catch { }
                     //return reader.GetValue(1).ToString() + reader.GetString(2);
-                    if (reader.GetValue(1).ToString() == login && VerifyMd5Hash(md5Hash, password, reader.GetString(2))) return true;
+                    if (reader.GetValue(1).ToString() == login && VerifyMd5Hash(md5Hash, password, reader.GetString(2)))
+                    {
+                        cashRegisterNumber = reader.GetInt32("cashregisternumber");
+                        
+                        return true;
+                    }
                 }
             }
             else

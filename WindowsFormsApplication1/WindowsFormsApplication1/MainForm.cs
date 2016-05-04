@@ -15,6 +15,8 @@ namespace WindowsFormsApplication1
     public partial class MainForm : Form
     {
         GoodsDBControl goodsBase = new GoodsDBControl();
+        ChecksControl checkControl = new ChecksControl();
+        int cashRegisterNumber;
         double summ = 0;
 
         private void changeSumm()
@@ -24,17 +26,25 @@ namespace WindowsFormsApplication1
             foreach(DataGridViewRow Row in dataGridView1.Rows){
                 try
                 {
-                    summ += Convert.ToInt16(Row.Cells[3].Value) * Convert.ToInt16(Row.Cells[4].Value);
+                    summ += Convert.ToDouble(Row.Cells[3].Value) * Convert.ToDouble(Row.Cells[4].Value);
                 }
                 catch { }
-            }            
+            }
+            summTextBox.Text = summ.ToString();
+            if (summ != 0)
+                buyButton.Enabled = true;
+            else
+                buyButton.Enabled = false;
             summLabel.Text = "Summ: " + summ.ToString();
         }
         public MainForm(Authorize parent)
         {
 
             Authorize parentForm = parent;
+            cashRegisterNumber =  parent.cashRegisterNumber;
+            this.Text = "Касса№ " + cashRegisterNumber;
             InitializeComponent();
+            defaultCheckText();
             goodsBase.createGoodsList();
         }
 
@@ -46,6 +56,12 @@ namespace WindowsFormsApplication1
         private void search_Click(object sender, EventArgs e)
         {
             Goods data = goodsBase.searchGoods(barcodeSearchText.Text);
+            foreach (DataGridViewRow Row in dataGridView1.Rows) {
+                if (Row.Cells[0].Value.Equals(data.Barcode)) {
+                    Row.Cells[3].Value = Convert.ToInt32(Row.Cells[3].Value) + 1;
+                    return;
+                }
+            }
             dataGridView1.Rows.Insert(0, 1);
             dataGridView1.Rows[0].SetValues(data.Barcode, data.Name, data.Measure, 1, data.Price);
         }
@@ -77,6 +93,20 @@ namespace WindowsFormsApplication1
                 catch (NullReferenceException) { }
             }                                        
             goodsBase.buyGoods(purchase);
+            if (checkBox.Checked == true)
+            {
+                string[] topText = topCheckRichTextBox.Lines.ToArray();
+                string[] bottomText = bottomCheckRichTextBox.Lines.ToArray();
+
+                checkControl.createCheck(topText
+                    , checkControl.generateMainCheckText(purchase, summ)
+                    , bottomText
+                    , cashRegisterNumber);
+                topText[0] = "Касса№ " + cashRegisterNumber + "\t Чек№ " + goodsBase.getCheckCounter(cashRegisterNumber);
+                topCheckRichTextBox.Lines = topText;
+            }
+            dataGridView1.Rows.Clear();
+            changeSumm();
         }     
 
         private void button2_Click(object sender, EventArgs e)
@@ -89,7 +119,26 @@ namespace WindowsFormsApplication1
         {
             StitchedGoodsForm form = new StitchedGoodsForm();
             form.ShowDialog();
-        }    
+        }
+
+        private void defaultCheckText() {
+            topCheckRichTextBox.Clear();
+            topCheckRichTextBox.AppendText("Касса№ " + cashRegisterNumber+ "\t");
+            topCheckRichTextBox.AppendText("Чек№ " + goodsBase.getCheckCounter(cashRegisterNumber) +"\n");
+            topCheckRichTextBox.AppendText("------------------------------------------------------------------------------------\n");
+            bottomCheckRichTextBox.AppendText("------------------------------------------------------------------------------------\n");
+        }
+
+        private void payTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                shortChangeTextBox.Text = (Convert.ToDouble(payTextBox.Text) - summ).ToString();
+            }
+            catch (FormatException) {
+                shortChangeTextBox.Text = "0";
+            }
+        }
     }
     
 }

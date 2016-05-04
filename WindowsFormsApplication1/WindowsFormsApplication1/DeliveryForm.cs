@@ -40,6 +40,8 @@ namespace WindowsFormsApplication1
                 catch (NullReferenceException) { }
             }
             goodsBase.newDelivery(delivery);
+            this.Close();
         }
+
     }
 }

@@ -12,9 +12,9 @@ namespace WindowsFormsApplication1
     {
         Dictionary<string, Goods> goods = new Dictionary<string, Goods>();
         CultureInfo clt = new CultureInfo("ja-JP");
-        protected void fillingList(string from)
+        protected void fillingList()
         {
-            MySqlDataReader reader = new DBControl().readFrom(from);
+            MySqlDataReader reader = new DBControl().readFrom("goods");
             while (reader.Read()) {
                 goods.Add(reader.GetInt32("barcode").ToString(), new Goods(reader.GetInt32("barcode").ToString()
                     , reader.GetString("name")
@@ -27,7 +27,13 @@ namespace WindowsFormsApplication1
         }
 
         public Goods searchGoods(string requiredBarcode) {
-            return goods[requiredBarcode];
+            try
+            {
+                return goods[requiredBarcode];
+            }
+            catch (KeyNotFoundException) {
+                return null;
+            }
         }
 
         public void buyGoods(List<Goods> purchase) { 
@@ -37,7 +43,11 @@ namespace WindowsFormsApplication1
             }
         }
         public List<Goods> shelfLifeControl() {
-            Dictionary<string, Goods> tmpGoodsDictionary = goods.Where(x => x.Value.ShelfLife.CompareTo(DateTime.Now) <= 0).ToDictionary(key => key.Key , value => value.Value);
+            goods.Clear();
+            fillingList();
+            Dictionary<string, Goods> tmpGoodsDictionary = goods
+                .Where(x => x.Value.ShelfLife.CompareTo(DateTime.Now) <= 0)
+                .ToDictionary(key => key.Key , value => value.Value);
             List<Goods> pastDueGoods = tmpGoodsDictionary.Values.ToList();
             foreach(Goods product in pastDueGoods){
                 try
@@ -80,7 +90,7 @@ namespace WindowsFormsApplication1
                             DateTime.Now.ToString("d", clt) + "', '" +
                             product.ShelfLife.ToString("d", clt) + "'");
                         goods.Clear();
-                        fillingList("goods");
+                        fillingList();
                     }
                 }
                 catch
@@ -92,8 +102,22 @@ namespace WindowsFormsApplication1
         }
 
         public Dictionary<string, Goods> createGoodsList() {
-            fillingList("goods");
+            fillingList();
             return goods;
+        }
+
+        public int getCheckCounter(int number) {
+            MySqlDataReader reader = Query("SELECT `checkcounter` FROM `checkcounter` WHERE `cashregisternumber`=" + number + ";").ExecuteReader();
+            reader.Read();
+            return reader.GetInt32("checkcounter");
+
+        }
+        public void updateCheckCounter(int number) {
+            MySqlDataReader reader = Query("SELECT `checkcounter` FROM `checkcounter` WHERE `cashregisternumber`=" + number + ";").ExecuteReader();
+            while (reader.Read())
+            {
+                Query("UPDATE `Kurs`.`checkcounter` SET `checkcounter` = `checkcounter` + 1 WHERE `checkcounter`.`cashregisternumber` = " + number + ";");
+            }
         }
         
     }
