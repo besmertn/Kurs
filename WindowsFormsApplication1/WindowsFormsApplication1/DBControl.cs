@@ -1,40 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.IO;
-using System.Data.Common;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Data;
 using MySql.Data.MySqlClient;
+using NLog;
 
 namespace WindowsFormsApplication1
 {
-    class DBControl
+    class DbControl
     {
-        private MySqlConnection connection;
-        private MySqlCommand command;
-        private MySqlDataReader reader;
-        private void connect() {
-            connection = new MySqlConnection("server=localhost;user id=root;persistsecurityinfo=True;database=Kurs");           
+        private MySqlConnection _connection;
+        private MySqlCommand _command;
+        private MySqlDataReader _reader;
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private void Connect() {
+            try
+            {
+                _logger.Debug("Trying to connect to the database");
+                _connection = new MySqlConnection("server=localhost;user id=root;persistsecurityinfo=True;database=Kurs");
+                _connection.Open();
+                _logger.Debug("The connection is successfully");
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Connection error " + e);
+            }
         }
         protected MySqlCommand Query(string query)
         {
-            connect();
-            connection.Open();
-            command = new MySqlCommand(query,connection);
-            command.ExecuteNonQuery();
-            return command;
+            Connect();
+            _command = new MySqlCommand(query,_connection);
+            _command.ExecuteNonQuery();           
+            return _command;
             
         }
 
-        public MySqlDataReader readFrom(string tableName)
+        public MySqlDataReader ReadFrom(string tableName)
         {
-            reader = Query("SELECT * FROM `" + tableName + "`").ExecuteReader();
-            return reader;
+            _reader = Query("SELECT * FROM `" + tableName + "`").ExecuteReader();
+            return _reader;
         }
 
 

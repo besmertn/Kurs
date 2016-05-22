@@ -42,5 +42,17 @@ namespace WindowsFormsApplication1.Properties {
                 return ((string)(this["KursConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string number {
+            get {
+                return ((string)(this["number"]));
+            }
+            set {
+                this["number"] = value;
+            }
+        }
     }
 }

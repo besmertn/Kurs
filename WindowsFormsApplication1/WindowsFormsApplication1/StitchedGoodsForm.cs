@@ -1,44 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
-
+    
 namespace WindowsFormsApplication1
 {
     public partial class StitchedGoodsForm : Form
     {
-        StitchedGoodsDBControl stitchedGoodsControl = new StitchedGoodsDBControl();
+        private readonly StitchedGoodsDbControl _stitchedGoodsControl = new StitchedGoodsDbControl();
         
         public StitchedGoodsForm()
         {
-            stitchedGoodsControl.shelfLifeControl();
+            _stitchedGoodsControl.ShelfLifeControl();
             InitializeComponent();
-            foreach (Goods product in stitchedGoodsControl.getAllStitchedGoods()) {
+            foreach (Goods product in _stitchedGoodsControl.GetAllStitchedGoods()) {
                 dataGridView1.Rows.Insert(0, 1);
                 dataGridView1.Rows[0].SetValues(product.Barcode
                     , product.Name
                     , product.Measure
                     , product.Count.ToString()
-                    , product.Price.ToString()
-                    , product.ShelfLife.ToString());
+                    , product.Price.ToString("F")
+                    , product.ShelfLife.ToString(CultureInfo.CurrentCulture));
             }        }
 
         private void removeGoodsButton_Click(object sender, EventArgs e)
         {
-            List<string> barcodes = new List<string>();
-            foreach (DataGridViewRow Row in dataGridView1.Rows) {
-                if (Row.Selected)
-                {
-                    barcodes.Add(Row.Cells[0].Value.ToString());
-                    dataGridView1.Rows.Remove(Row);
-                }
+            var barcodes = new List<string>();
+            foreach (DataGridViewRow row in dataGridView1.Rows) {
+                if (!row.Selected) continue;
+                barcodes.Add(row.Cells[0].Value.ToString());
+                dataGridView1.Rows.Remove(row);
             }
-            stitchedGoodsControl.RemoveStitchedGoods(barcodes);
+            _stitchedGoodsControl.RemoveStitchedGoods(barcodes);
         }
 
         

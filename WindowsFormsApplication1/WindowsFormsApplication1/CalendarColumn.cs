@@ -95,9 +95,9 @@ namespace WindowsFormsApplication1
 
     class CalendarEditingControl : DateTimePicker, IDataGridViewEditingControl
     {
-        DataGridView dataGridView;
-        private bool valueChanged = false;
-        int rowIndex;
+        DataGridView _dataGridView;
+        private bool _valueChanged = false;
+        int _rowIndex;
 
         public CalendarEditingControl()
         {
@@ -157,11 +157,11 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return rowIndex;
+                return _rowIndex;
             }
             set
             {
-                rowIndex = value;
+                _rowIndex = value;
             }
         }
 
@@ -210,11 +210,11 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return dataGridView;
+                return _dataGridView;
             }
             set
             {
-                dataGridView = value;
+                _dataGridView = value;
             }
         }
 
@@ -224,11 +224,11 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return valueChanged;
+                return _valueChanged;
             }
             set
             {
-                valueChanged = value;
+                _valueChanged = value;
             }
         }
 
@@ -246,7 +246,7 @@ namespace WindowsFormsApplication1
         {
             // Notify the DataGridView that the contents of the cell
             // have changed.
-            valueChanged = true;
+            _valueChanged = true;
             this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
             base.OnValueChanged(eventargs);
         }

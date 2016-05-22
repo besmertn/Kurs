@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
@@ -15,27 +11,27 @@ namespace WindowsFormsApplication1
         public double Price { set; get; }
         public DateTime LastDelivery { set; get; }
         public DateTime ShelfLife{ set; get; }
-        public Goods(string Barcode, string Name, string Measure, int Count, double Price, DateTime LastDelivery, DateTime ShelfLife) {
-            this.Barcode = Barcode;
-            this.Name = Name;
-            this.Measure = Measure;
-            this.Count = Count;
-            this.Price = Price;
-            this.LastDelivery = LastDelivery;
-            this.ShelfLife = ShelfLife;
+        public Goods(string barcode, string name, string measure, int count, double price, DateTime lastDelivery, DateTime shelfLife) {
+            Barcode = barcode;
+            Name = name;
+            Measure = measure;
+            Count = count;
+            Price = price;
+            LastDelivery = lastDelivery;
+            ShelfLife = shelfLife;
         }
-        public Goods(string Barcode, string Name, string Measure, int Count, double Price)
+        public Goods(string barcode, string name, string measure, int count, double price)
         {
-            this.Barcode = Barcode;
-            this.Name = Name;
-            this.Measure = Measure;
-            this.Count = Count;
-            this.Price = Price;
+            Barcode = barcode;
+            Name = name;
+            Measure = measure;
+            Count = count;
+            Price = price;
         }
 
-        static public Goods operator -(Goods A, Goods B){
-            A.Count -= B.Count;
-            return A;
+        public static Goods operator -(Goods a, Goods b){
+            a.Count -= b.Count;
+            return a;
         }
 
 

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace WindowsFormsApplication1
 {
-    class ChecksControl : GoodsDBControl
+    internal class ChecksControl : GoodsDbControl
     {
-        public void createCheck(string[] topText, string[] mainText, string[] bottomText, int number) {
-            string path = @"checks/check";
-            StreamWriter sr = File.CreateText(path + getCheckCounter(number) + ".txt");
+        public string CreateCheck(string[] topText, string[] mainText, string[] bottomText, int number)
+        {
+            string path = @"checks" + number;
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            path = path + "/check" + GetCheckCounter(number) + ".txt";
+            StreamWriter sr = File.CreateText(path);
             foreach(string line in topText){
                 sr.WriteLine(line);
             }
@@ -23,12 +23,13 @@ namespace WindowsFormsApplication1
             {
                 sr.WriteLine(line);
             }
-            updateCheckCounter(number);
+            UpdateCheckCounter(number);
             sr.WriteLine(DateTime.Now);
             sr.Close();
+            return path;
         }
 
-        public string[] generateMainCheckText(List<Goods> purchase, double summ) {
+        public string[] GenerateMainCheckText(List<Goods> purchase, double summ) {
             List<string> resultText = new List<string>();
             foreach (Goods product in purchase) {
                 resultText.Add(product.Name);

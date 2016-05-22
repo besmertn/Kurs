@@ -1,42 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Security.Cryptography;
+using NLog;
 
 namespace WindowsFormsApplication1
 {
-    class UsersDBControl : DBControl
+    class UsersDbControl : DbControl
     {
-        protected MD5 md5Hash = MD5.Create();
-        public int cashRegisterNumber{set; get;}
-        public void updateUsersDB()
+        protected MD5 Md5Hash = MD5.Create();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        public int CashRegisterNumber{set; get;}
+        public void UpdateUsersDb()
         {
-            string path = @"usersDB.txt";
+            const string path = @"usersDB.txt";
 
             using (StreamReader sr = File.OpenText(path))
             {
-                string s = "";
+                string s;
                 while ((s = sr.ReadLine()) != null)
                 {
-                    string login = "";
-                    string hash = "";
-                    int inx = s.IndexOf("*");
+                    int inx = s.IndexOf("*", StringComparison.Ordinal);
+                    int inx2 = s.IndexOf(";", StringComparison.Ordinal);
                     int len = s.Length;
-                    login = s.Substring(0, inx);
-                    hash = s.Substring(inx + 1, len - inx - 2);
+                    string login = s.Substring(0, inx);
+                    string hash = s.Substring(inx + 1, inx2 - inx - 1);
+                    string cashregisternumber = s.Substring(inx2 + 1, len - inx2 - 1);
                     try
                     {
-                        string query = "INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`,``cashregisternumber) VALUES (NULL,'" + login + "', '" + hash + "', NULL)";
-                        this.Query(query);
+                        Query("INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`,`cashregisternumber`) VALUES (NULL,'" + login + "', '" + hash + "', " + cashregisternumber + ")");
+                        Query("INSERT INTO `checkcounter`(`cashregisternumber`, `checkcounter`) VALUES(" + cashregisternumber + ", 0)");
                     }
                     catch
                     {
-                        string query = "UPDATE `Kurs`.`users` SET `password`='" + hash + "' WHERE `login` = '" + login + "';";
-                        this.Query(query);
+                        Query("UPDATE `Kurs`.`users` SET `password`='" + hash + "' WHERE `login` = '" + login + "';");
                     }
 
 
@@ -44,7 +42,6 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
 
@@ -79,56 +76,44 @@ namespace WindowsFormsApplication1
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
-        private void addUser(string login, string password)
+        public void AddUser(User user)
         {
             string path = @"usersDB.txt";
 
-            string hash = "";
-            using (md5Hash)
+            string hash;
+            using (Md5Hash)
             {
-                hash = GetMd5Hash(md5Hash, password);
+                hash = GetMd5Hash(Md5Hash, user.Password);
             }
-            string result = login + "*" + hash + ";";
+            string result = user.Login + "*" + hash + ";" + user.CashRegisterNumber;
             using (StreamWriter sw = File.CreateText(path))
             {
                 sw.WriteLine(result);
             }
 
         }
-        public Boolean authorizeCheck(string login, string password)
+        public Boolean AuthorizeCheck(string login, string password)
         {
-            MySqlDataReader reader = readFrom("users");
+            _logger.Info(login);
+            _logger.Info(password);
+            MySqlDataReader reader = ReadFrom("users");
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    try
+                    if (reader.GetValue(1).ToString() == login && VerifyMd5Hash(Md5Hash, password, reader.GetString("password")))
                     {
-                        Query("INSERT INTO `checkcounter`(`cashregisternumber`, `checkcounter`) VALUES(" + reader.GetInt32("cashregisternumber") + ", 0)");
-                    }
-                    catch { }
-                    //return reader.GetValue(1).ToString() + reader.GetString(2);
-                    if (reader.GetValue(1).ToString() == login && VerifyMd5Hash(md5Hash, password, reader.GetString(2)))
-                    {
-                        cashRegisterNumber = reader.GetInt32("cashregisternumber");
-                        
+                        CashRegisterNumber = reader.GetInt32("cashregisternumber");
+                        _logger.Info(true);
                         return true;
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine("No rows found.");
-            }
             reader.Close();
             return false;
-        }
-        
+        }      
     }
 }

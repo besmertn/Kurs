@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.removeGoodsButton = new System.Windows.Forms.Button();
             this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.measure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.removeGoodsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,18 +50,8 @@
             this.price});
             this.dataGridView1.Location = new System.Drawing.Point(-2, -1);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(644, 228);
+            this.dataGridView1.Size = new System.Drawing.Size(644, 145);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // removeGoodsButton
-            // 
-            this.removeGoodsButton.Location = new System.Drawing.Point(507, 254);
-            this.removeGoodsButton.Name = "removeGoodsButton";
-            this.removeGoodsButton.Size = new System.Drawing.Size(104, 23);
-            this.removeGoodsButton.TabIndex = 2;
-            this.removeGoodsButton.Text = "RemoveGoods";
-            this.removeGoodsButton.UseVisualStyleBackColor = true;
-            this.removeGoodsButton.Click += new System.EventHandler(this.removeGoodsButton_Click);
             // 
             // barcode
             // 
@@ -93,11 +83,22 @@
             this.price.HeaderText = "Цена за еденицу";
             this.price.Name = "price";
             // 
+            // removeGoodsButton
+            // 
+            this.removeGoodsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.removeGoodsButton.Location = new System.Drawing.Point(482, 150);
+            this.removeGoodsButton.Name = "removeGoodsButton";
+            this.removeGoodsButton.Size = new System.Drawing.Size(150, 50);
+            this.removeGoodsButton.TabIndex = 2;
+            this.removeGoodsButton.Text = "Remove Selected Goods";
+            this.removeGoodsButton.UseVisualStyleBackColor = true;
+            this.removeGoodsButton.Click += new System.EventHandler(this.removeGoodsButton_Click);
+            // 
             // StitchedGoodsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 345);
+            this.ClientSize = new System.Drawing.Size(644, 212);
             this.Controls.Add(this.removeGoodsButton);
             this.Controls.Add(this.dataGridView1);
             this.Name = "StitchedGoodsForm";

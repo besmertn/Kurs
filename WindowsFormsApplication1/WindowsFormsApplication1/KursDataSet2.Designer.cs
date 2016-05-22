@@ -20,9 +20,9 @@ namespace WindowsFormsApplication1 {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("KursDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("KursDataSet2")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class KursDataSet : global::System.Data.DataSet {
+    public partial class KursDataSet2 : global::System.Data.DataSet {
         
         private goodsDataTable tablegoods;
         
@@ -30,7 +30,7 @@ namespace WindowsFormsApplication1 {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public KursDataSet() {
+        public KursDataSet2() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1 {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected KursDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected KursDataSet2(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -127,7 +127,7 @@ namespace WindowsFormsApplication1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            KursDataSet cln = ((KursDataSet)(base.Clone()));
+            KursDataSet2 cln = ((KursDataSet2)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -199,9 +199,9 @@ namespace WindowsFormsApplication1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "KursDataSet";
+            this.DataSetName = "KursDataSet2";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/KursDataSet.xsd";
+            this.Namespace = "http://tempuri.org/KursDataSet2.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tablegoods = new goodsDataTable();
@@ -225,7 +225,7 @@ namespace WindowsFormsApplication1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            KursDataSet ds = new KursDataSet();
+            KursDataSet2 ds = new KursDataSet2();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -288,8 +288,6 @@ namespace WindowsFormsApplication1 {
             private global::System.Data.DataColumn columncount;
             
             private global::System.Data.DataColumn columnprice;
-            
-            private global::System.Data.DataColumn columnlastdelivery;
             
             private global::System.Data.DataColumn columnshelflife;
             
@@ -368,14 +366,6 @@ namespace WindowsFormsApplication1 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn lastdeliveryColumn {
-                get {
-                    return this.columnlastdelivery;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn shelflifeColumn {
                 get {
                     return this.columnshelflife;
@@ -419,7 +409,7 @@ namespace WindowsFormsApplication1 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public goodsRow AddgoodsRow(string name, string measure, int count, int price, System.DateTime lastdelivery, System.DateTime shelflife) {
+            public goodsRow AddgoodsRow(string name, string measure, int count, double price, System.DateTime shelflife) {
                 goodsRow rowgoodsRow = ((goodsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -427,7 +417,6 @@ namespace WindowsFormsApplication1 {
                         measure,
                         count,
                         price,
-                        lastdelivery,
                         shelflife};
                 rowgoodsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowgoodsRow);
@@ -463,7 +452,6 @@ namespace WindowsFormsApplication1 {
                 this.columnmeasure = base.Columns["measure"];
                 this.columncount = base.Columns["count"];
                 this.columnprice = base.Columns["price"];
-                this.columnlastdelivery = base.Columns["lastdelivery"];
                 this.columnshelflife = base.Columns["shelflife"];
             }
             
@@ -478,10 +466,8 @@ namespace WindowsFormsApplication1 {
                 base.Columns.Add(this.columnmeasure);
                 this.columncount = new global::System.Data.DataColumn("count", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncount);
-                this.columnprice = new global::System.Data.DataColumn("price", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnprice = new global::System.Data.DataColumn("price", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprice);
-                this.columnlastdelivery = new global::System.Data.DataColumn("lastdelivery", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnlastdelivery);
                 this.columnshelflife = new global::System.Data.DataColumn("shelflife", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnshelflife);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
@@ -497,7 +483,6 @@ namespace WindowsFormsApplication1 {
                 this.columnmeasure.MaxLength = 10;
                 this.columncount.AllowDBNull = false;
                 this.columnprice.AllowDBNull = false;
-                this.columnlastdelivery.AllowDBNull = false;
                 this.columnshelflife.AllowDBNull = false;
             }
             
@@ -566,7 +551,7 @@ namespace WindowsFormsApplication1 {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                KursDataSet ds = new KursDataSet();
+                KursDataSet2 ds = new KursDataSet2();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -685,23 +670,12 @@ namespace WindowsFormsApplication1 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int price {
+            public double price {
                 get {
-                    return ((int)(this[this.tablegoods.priceColumn]));
+                    return ((double)(this[this.tablegoods.priceColumn]));
                 }
                 set {
                     this[this.tablegoods.priceColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime lastdelivery {
-                get {
-                    return ((global::System.DateTime)(this[this.tablegoods.lastdeliveryColumn]));
-                }
-                set {
-                    this[this.tablegoods.lastdeliveryColumn] = value;
                 }
             }
             
@@ -752,7 +726,7 @@ namespace WindowsFormsApplication1 {
         }
     }
 }
-namespace WindowsFormsApplication1.KursDataSetTableAdapters {
+namespace WindowsFormsApplication1.KursDataSet2TableAdapters {
     
     
     /// <summary>
@@ -881,14 +855,12 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("measure", "measure");
             tableMapping.ColumnMappings.Add("count", "count");
             tableMapping.ColumnMappings.Add("price", "price");
-            tableMapping.ColumnMappings.Add("lastdelivery", "lastdelivery");
             tableMapping.ColumnMappings.Add("shelflife", "shelflife");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM `kurs`.`goods` WHERE ((`barcode` = @p1) AND (`name` = @p2) AND (`meas" +
-                "ure` = @p3) AND (`count` = @p4) AND (`price` = @p5) AND (`lastdelivery` = @p6) A" +
-                "ND (`shelflife` = @p7))";
+                "ure` = @p3) AND (`count` = @p4) AND (`price` = @p5) AND (`shelflife` = @p6))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -924,8 +896,8 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.Double;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Double;
             param.IsNullable = true;
             param.SourceColumn = "price";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
@@ -935,67 +907,14 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Date;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
             param.IsNullable = true;
-            param.SourceColumn = "lastdelivery";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
-            param.IsNullable = true;
             param.SourceColumn = "shelflife";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
-            this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `kurs`.`goods` (`name`, `measure`, `count`, `price`, `lastdelivery`, " +
-                "`shelflife`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p1";
-            param.DbType = global::System.Data.DbType.StringFixedLength;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.String;
-            param.IsNullable = true;
-            param.SourceColumn = "name";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.StringFixedLength;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.String;
-            param.IsNullable = true;
-            param.SourceColumn = "measure";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "count";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "price";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "lastdelivery";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "shelflife";
-            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `kurs`.`goods` SET `name` = @p1, `measure` = @p2, `count` = @p3, `price` = @p4, `lastdelivery` = @p5, `shelflife` = @p6 WHERE ((`barcode` = @p7) AND (`name` = @p8) AND (`measure` = @p9) AND (`count` = @p10) AND (`price` = @p11) AND (`lastdelivery` = @p12) AND (`shelflife` = @p13))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `kurs`.`goods` SET `name` = @p1, `measure` = @p2, `count` = @p3, `price` =" +
+                " @p4, `shelflife` = @p5 WHERE ((`barcode` = @p6) AND (`name` = @p7) AND (`measur" +
+                "e` = @p8) AND (`count` = @p9) AND (`price` = @p10) AND (`shelflife` = @p11))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -1020,8 +939,8 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.Double;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Double;
             param.IsNullable = true;
             param.SourceColumn = "price";
             this._adapter.UpdateCommand.Parameters.Add(param);
@@ -1030,17 +949,10 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Date;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
             param.IsNullable = true;
-            param.SourceColumn = "lastdelivery";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
-            param.IsNullable = true;
             param.SourceColumn = "shelflife";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -1048,7 +960,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
+            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.StringFixedLength;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.String;
             param.IsNullable = true;
@@ -1056,7 +968,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p9";
+            param.ParameterName = "@p8";
             param.DbType = global::System.Data.DbType.StringFixedLength;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.String;
             param.IsNullable = true;
@@ -1064,7 +976,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p10";
+            param.ParameterName = "@p9";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -1072,23 +984,15 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p11";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.ParameterName = "@p10";
+            param.DbType = global::System.Data.DbType.Double;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Double;
             param.IsNullable = true;
             param.SourceColumn = "price";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p12";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "lastdelivery";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p13";
+            param.ParameterName = "@p11";
             param.DbType = global::System.Data.DbType.Date;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Date;
             param.IsNullable = true;
@@ -1110,8 +1014,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife" +
-                "` FROM `goods`";
+            this._commandCollection[0].CommandText = "SELECT `barcode`, `name`, `measure`, `count`, `price`, `shelflife` FROM `goods`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1119,7 +1022,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(KursDataSet.goodsDataTable dataTable) {
+        public virtual int Fill(KursDataSet2.goodsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1132,9 +1035,9 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual KursDataSet.goodsDataTable GetData() {
+        public virtual KursDataSet2.goodsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            KursDataSet.goodsDataTable dataTable = new KursDataSet.goodsDataTable();
+            KursDataSet2.goodsDataTable dataTable = new KursDataSet2.goodsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1142,14 +1045,14 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(KursDataSet.goodsDataTable dataTable) {
+        public virtual int Update(KursDataSet2.goodsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(KursDataSet dataSet) {
+        public virtual int Update(KursDataSet2 dataSet) {
             return this.Adapter.Update(dataSet, "goods");
         }
         
@@ -1172,7 +1075,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, string p2, string p3, int p4, int p5, System.DateTime p6, System.DateTime p7) {
+        public virtual int Delete(int p1, string p2, string p3, int p4, double p5, System.DateTime p6) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
@@ -1187,9 +1090,8 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(p3));
             }
             this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4));
-            this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(p5));
+            this.Adapter.DeleteCommand.Parameters[4].Value = ((double)(p5));
             this.Adapter.DeleteCommand.Parameters[5].Value = ((System.DateTime)(p6));
-            this.Adapter.DeleteCommand.Parameters[6].Value = ((System.DateTime)(p7));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -1209,45 +1111,8 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, int p3, int p4, System.DateTime p5, System.DateTime p6) {
-            if ((p1 == null)) {
-                throw new global::System.ArgumentNullException("p1");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(p1));
-            }
-            if ((p2 == null)) {
-                throw new global::System.ArgumentNullException("p2");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
-            }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((System.DateTime)(p5));
-            this.Adapter.InsertCommand.Parameters[5].Value = ((System.DateTime)(p6));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, int p3, int p4, System.DateTime p5, System.DateTime p6, int p7, string p8, string p9, int p10, int p11, System.DateTime p12, System.DateTime p13) {
+        public virtual int Update(string p1, string p2, int p3, double p4, System.DateTime p5, int p6, string p7, string p8, int p9, double p10, System.DateTime p11) {
             if ((p1 == null)) {
                 throw new global::System.ArgumentNullException("p1");
             }
@@ -1261,26 +1126,24 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((double)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((System.DateTime)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
+            if ((p7 == null)) {
+                throw new global::System.ArgumentNullException("p7");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(p7));
+            }
             if ((p8 == null)) {
                 throw new global::System.ArgumentNullException("p8");
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(p8));
             }
-            if ((p9 == null)) {
-                throw new global::System.ArgumentNullException("p9");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(p9));
-            }
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(p10));
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(p11));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((System.DateTime)(p12));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(p13));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((double)(p10));
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((System.DateTime)(p11));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -1389,7 +1252,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(KursDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(KursDataSet2 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             if ((this._goodsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.goods.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
@@ -1408,7 +1271,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(KursDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(KursDataSet2 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             if ((this._goodsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.goods.Select(null, null, global::System.Data.DataViewRowState.Added);
@@ -1426,7 +1289,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(KursDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(KursDataSet2 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             if ((this._goodsTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.goods.Select(null, null, global::System.Data.DataViewRowState.Deleted);
@@ -1468,7 +1331,7 @@ namespace WindowsFormsApplication1.KursDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(KursDataSet dataSet) {
+        public virtual int UpdateAll(KursDataSet2 dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

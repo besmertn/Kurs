@@ -54,7 +54,7 @@
             this.price});
             this.dataGridView1.Location = new System.Drawing.Point(-4, 2);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(743, 228);
+            this.dataGridView1.Size = new System.Drawing.Size(743, 142);
             this.dataGridView1.TabIndex = 0;
             // 
             // barcode
@@ -89,11 +89,12 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(575, 257);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(577, 150);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(150, 50);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Submit";
+            this.button1.Text = "Add New Goods";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -127,11 +128,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(739, 320);
+            this.ClientSize = new System.Drawing.Size(739, 212);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "DeliveryForm";
-            this.Text = "Form2";
+            this.Text = "New Delivery";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Globalization;
+using NLog;
 
 namespace WindowsFormsApplication1
 {
-    class GoodsDBControl : DBControl
+    internal class GoodsDbControl : DbControl
     {
-        Dictionary<string, Goods> goods = new Dictionary<string, Goods>();
-        CultureInfo clt = new CultureInfo("ja-JP");
-        protected void fillingList()
+        readonly Dictionary<string, Goods> _goods = new Dictionary<string, Goods>();
+        private readonly CultureInfo _clt = new CultureInfo("ja-JP");
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        public void FillingList()
         {
-            MySqlDataReader reader = new DBControl().readFrom("goods");
+            
+            MySqlDataReader reader = new DbControl().ReadFrom("goods");
+            _logger.Debug("Filling goods list");
             while (reader.Read()) {
-                goods.Add(reader.GetInt32("barcode").ToString(), new Goods(reader.GetInt32("barcode").ToString()
+                _goods.Add(reader.GetInt32("barcode").ToString(), new Goods(reader.GetInt32("barcode").ToString()
                     , reader.GetString("name")
                     , reader.GetString("measure")
                     , reader.GetInt32("count")
@@ -26,93 +28,105 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public Goods searchGoods(string requiredBarcode) {
+        public Goods SearchGoods(string requiredBarcode) {
             try
             {
-                return goods[requiredBarcode];
+                _logger.Debug("Searching for " + requiredBarcode);
+                return _goods[requiredBarcode];
             }
             catch (KeyNotFoundException) {
+                _logger.Warn("Such key not exist");
                 return null;
             }
         }
 
-        public void buyGoods(List<Goods> purchase) { 
-            foreach(Goods product in purchase){
-                goods[product.Barcode] -= product;
+        public void BuyGoods(List<Goods> purchase)
+        {
+            int tmp = Convert.ToInt32(Properties.Settings.Default.number) + 1;
+            Properties.Settings.Default.number = tmp.ToString();
+            foreach(Goods product in purchase){               
                 Query("UPDATE `goods` SET `count` =  `count`-" + product.Count + " WHERE `barcode`= " + product.Barcode + " ;");
-            }
+                Query("INSERT INTO `purchase`(`id`, `barcode`, `name`, `amount`, `date`) VALUES('" + Properties.Settings.Default.number + "', '"+ product.Barcode +"', '"+ product.Name +"', '"+ product.Count +"','"+ DateTime.Now.ToString(_clt) +"');");
+            }            
         }
-        public List<Goods> shelfLifeControl() {
-            goods.Clear();
-            fillingList();
-            Dictionary<string, Goods> tmpGoodsDictionary = goods
+        public List<Goods> ShelfLifeControl() {
+            _goods.Clear();
+            FillingList();
+            Dictionary<string, Goods> tmpGoodsDictionary = _goods
                 .Where(x => x.Value.ShelfLife.CompareTo(DateTime.Now) <= 0)
                 .ToDictionary(key => key.Key , value => value.Value);
             List<Goods> pastDueGoods = tmpGoodsDictionary.Values.ToList();
             foreach(Goods product in pastDueGoods){
                 try
                 {
+                    _logger.Debug("Transfering INSERT INTO `stitchedgoods`");
                     Query("DELETE FROM `Kurs`.`goods` WHERE `goods`.`barcode` = " + product.Barcode + ";");
-                    goods.Remove(product.Barcode);
-                    Query("INSERT INTO `stitchedgoods`(`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES(" + product.Barcode + ", '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + product.ShelfLife.ToString("d", clt) + "')");
+                    _goods.Remove(product.Barcode);
+                    Query("INSERT INTO `stitchedgoods`(`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES(" + product.Barcode + ", '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + product.ShelfLife.ToString("d", _clt) + "')");
+                    _logger.Debug("Successful SQL query");
                 }
                 catch (MySqlException e) {
                     if (e.ErrorCode == 1062)
                     {
-                        Query("INSERT INTO `stitchedgoods`(`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES(NULL, '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + product.ShelfLife.ToString("d", clt) + "')");
+                        _logger.Warn("Such key already exist, creating of new key");
+                        Query("INSERT INTO `stitchedgoods`(`barcode`, `name`, `measure`, `count`, `price`, `shelflife`) VALUES(NULL, '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + product.ShelfLife.ToString("d", _clt) + "')");
+                        _logger.Debug("Successful SQL query");
                     }
                 }
             }
             return pastDueGoods;
         }
 
-        public Boolean newDelivery(List<Goods> delivery) {
+        public Boolean NewDelivery(List<Goods> delivery) {
             foreach (Goods product in delivery) {
                 
                 try
                 {
-                    Query("INSERT INTO `goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES('" + product.Barcode + "', '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + DateTime.Now.ToString("d", clt) + "', '" + product.ShelfLife.ToString("d", clt) + "')");
-                    goods.Add(product.Barcode, new Goods(product.Barcode
+                    _logger.Debug("Trying INSERT INTO `goods`");
+                    Query("INSERT INTO `goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES('" + product.Barcode + "', '" + product.Name + "', '" + product.Measure + "', '" + product.Count + "', '" + product.Price + "', '" + DateTime.Now.ToString("d", _clt) + "', '" + product.ShelfLife.ToString("d", _clt) + "')");
+                    _goods.Add(product.Barcode, new Goods(product.Barcode
                         , product.Name
                         , product.Measure
                         , product.Count
                         , product.Price
                         , product.LastDelivery
                         , product.ShelfLife));
+                    _logger.Debug("Successful SQL query");
                 }
                 catch (MySqlException e)
                 {
                     if (e.ErrorCode == 1062)
                     {
+                        _logger.Warn("Such key already exist, creating of new key");
                         Query("INSERT INTO `Kurs`.`goods` (`barcode`, `name`, `measure`, `count`, `price`, `lastdelivery`, `shelflife`) VALUES(NULL, '" +
                             product.Name + "', '" + product.Measure + "'), '" +
                             product.Count + "', '" + product.Price + "', '" +
-                            DateTime.Now.ToString("d", clt) + "', '" +
-                            product.ShelfLife.ToString("d", clt) + "'");
-                        goods.Clear();
-                        fillingList();
+                            DateTime.Now.ToString("d", _clt) + "', '" +
+                            product.ShelfLife.ToString("d", _clt) + "'");
+                        _goods.Clear();
+                        FillingList();
+                        _logger.Debug("Successful SQL query");
                     }
                 }
                 catch
                 {
+                    _logger.Error("SQL quey error");
                     return false;
                 }
             }
             return true;
         }
 
-        public Dictionary<string, Goods> createGoodsList() {
-            fillingList();
-            return goods;
-        }
-
-        public int getCheckCounter(int number) {
+        public int GetCheckCounter(int number) {
+            _logger.Debug("Getting of checkcounter");
             MySqlDataReader reader = Query("SELECT `checkcounter` FROM `checkcounter` WHERE `cashregisternumber`=" + number + ";").ExecuteReader();
             reader.Read();
+            _logger.Info("Current check number is " + reader.GetInt32("checkcounter"));
             return reader.GetInt32("checkcounter");
 
         }
-        public void updateCheckCounter(int number) {
+        public void UpdateCheckCounter(int number) {
+            _logger.Debug("Updating of checkcounter");
             MySqlDataReader reader = Query("SELECT `checkcounter` FROM `checkcounter` WHERE `cashregisternumber`=" + number + ";").ExecuteReader();
             while (reader.Read())
             {
