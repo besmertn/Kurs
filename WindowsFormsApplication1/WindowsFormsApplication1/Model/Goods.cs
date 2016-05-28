@@ -4,14 +4,17 @@ namespace WindowsFormsApplication1
 {
     class Goods
     {
-        public string Barcode { set; get;}
+        public string Barcode { set; get; }
         public string Name { set; get; }
         public string Measure { set; get; }
         public int Count { set; get; }
         public double Price { set; get; }
         public DateTime LastDelivery { set; get; }
-        public DateTime ShelfLife{ set; get; }
-        public Goods(string barcode, string name, string measure, int count, double price, DateTime lastDelivery, DateTime shelfLife) {
+        public DateTime ShelfLife { set; get; }
+
+        public Goods(string barcode, string name, string measure, int count, double price, DateTime lastDelivery,
+            DateTime shelfLife)
+        {
             Barcode = barcode;
             Name = name;
             Measure = measure;
@@ -20,6 +23,7 @@ namespace WindowsFormsApplication1
             LastDelivery = lastDelivery;
             ShelfLife = shelfLife;
         }
+
         public Goods(string barcode, string name, string measure, int count, double price)
         {
             Barcode = barcode;
@@ -29,11 +33,10 @@ namespace WindowsFormsApplication1
             Price = price;
         }
 
-        public static Goods operator -(Goods a, Goods b){
-            a.Count -= b.Count;
-            return a;
+        protected Goods(string barcode, string name)
+        {
+            Barcode = barcode;
+            Name = name;
         }
-
-
     }
 }

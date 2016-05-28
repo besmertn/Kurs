@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using WindowsFormsApplication1.View;
 
 namespace WindowsFormsApplication1
 {

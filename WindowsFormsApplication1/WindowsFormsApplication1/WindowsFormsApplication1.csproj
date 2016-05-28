@@ -88,24 +88,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminForm.cs">
+    <Compile Include="View\AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdminForm.Designer.cs">
+    <Compile Include="View\AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Authorize.cs">
+    <Compile Include="View\Authorize.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Authorize.Designer.cs">
+    <Compile Include="View\Authorize.Designer.cs">
       <DependentUpon>Authorize.cs</DependentUpon>
     </Compile>
     <Compile Include="CalendarColumn.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ChecksControl.cs" />
-    <Compile Include="Discount.cs" />
-    <Compile Include="Goods.cs" />
+    <Compile Include="Controller\ChecksControl.cs" />
+    <Compile Include="Model\Discount.cs" />
+    <Compile Include="Model\Goods.cs" />
     <Compile Include="KursDataSet2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,43 +126,43 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KursDataSet8.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Purchase.cs" />
-    <Compile Include="SalesDBControl.cs" />
-    <Compile Include="StitchedGoodsDBControl.cs" />
-    <Compile Include="StitchedGoodsForm.cs">
+    <Compile Include="Model\Purchase.cs" />
+    <Compile Include="Controller\SalesDBControl.cs" />
+    <Compile Include="Controller\StitchedGoodsDBControl.cs" />
+    <Compile Include="View\StitchedGoodsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StitchedGoodsForm.Designer.cs">
+    <Compile Include="View\StitchedGoodsForm.Designer.cs">
       <DependentUpon>StitchedGoodsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="User.cs" />
-    <Compile Include="UsersDBControl.cs" />
-    <Compile Include="DBControl.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Controller\UsersDBControl.cs" />
+    <Compile Include="Controller\DBControl.cs" />
+    <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="View\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeliveryForm.cs">
+    <Compile Include="View\DeliveryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DeliveryForm.Designer.cs">
+    <Compile Include="View\DeliveryForm.Designer.cs">
       <DependentUpon>DeliveryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GoodsDBControl.cs" />
+    <Compile Include="Controller\GoodsDBControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AdminForm.resx">
+    <EmbeddedResource Include="View\AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Authorize.resx">
+    <EmbeddedResource Include="View\Authorize.resx">
       <DependentUpon>Authorize.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DeliveryForm.resx">
+    <EmbeddedResource Include="View\DeliveryForm.resx">
       <DependentUpon>DeliveryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -174,9 +174,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="StitchedGoodsForm.resx">
+    <EmbeddedResource Include="View\StitchedGoodsForm.resx">
       <DependentUpon>StitchedGoodsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="KursDataSet2.xsc">
       <DependentUpon>KursDataSet2.xsd</DependentUpon>
     </None>
@@ -242,6 +244,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace WindowsFormsApplication1.View
 {
-    partial class StitchedGoodsForm
+    partial class DeliveryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,13 +34,19 @@
             this.measure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.removeGoodsButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.barcode,
@@ -48,10 +54,10 @@
             this.measure,
             this.count,
             this.price});
-            this.dataGridView1.Location = new System.Drawing.Point(-2, -1);
+            this.dataGridView1.Location = new System.Drawing.Point(-4, 2);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(644, 145);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.Size = new System.Drawing.Size(743, 142);
+            this.dataGridView1.TabIndex = 0;
             // 
             // barcode
             // 
@@ -83,26 +89,54 @@
             this.price.HeaderText = "Цена за еденицу";
             this.price.Name = "price";
             // 
-            // removeGoodsButton
+            // button1
             // 
-            this.removeGoodsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.removeGoodsButton.Location = new System.Drawing.Point(482, 150);
-            this.removeGoodsButton.Name = "removeGoodsButton";
-            this.removeGoodsButton.Size = new System.Drawing.Size(150, 50);
-            this.removeGoodsButton.TabIndex = 2;
-            this.removeGoodsButton.Text = "Remove Selected Goods";
-            this.removeGoodsButton.UseVisualStyleBackColor = true;
-            this.removeGoodsButton.Click += new System.EventHandler(this.removeGoodsButton_Click);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(577, 150);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(150, 50);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Add New Goods";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // StitchedGoodsForm
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Код товара";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Наименование";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Еденица измерения";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Количество";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Цена за еденицу";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // DeliveryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 212);
-            this.Controls.Add(this.removeGoodsButton);
+            this.ClientSize = new System.Drawing.Size(739, 212);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "StitchedGoodsForm";
-            this.Text = "StitchedGoodsForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "DeliveryForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "New Delivery";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
@@ -111,11 +145,18 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button removeGoodsButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn measure;
         private System.Windows.Forms.DataGridViewTextBoxColumn count;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
+
+
     }
 }

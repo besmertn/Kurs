@@ -2,15 +2,15 @@
 using MySql.Data.MySqlClient;
 using NLog;
 
-namespace WindowsFormsApplication1
+namespace WindowsFormsApplication1.Controller
 {
     class DbControl
     {
         private MySqlConnection _connection;
-        private MySqlCommand _command;
-        private MySqlDataReader _reader;
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private void Connect() {
+
+        private void Connect()
+        {
             try
             {
                 _logger.Debug("Trying to connect to the database");
@@ -23,21 +23,18 @@ namespace WindowsFormsApplication1
                 _logger.Error("Connection error " + e);
             }
         }
+
         protected MySqlCommand Query(string query)
         {
             Connect();
-            _command = new MySqlCommand(query,_connection);
-            _command.ExecuteNonQuery();           
-            return _command;
-            
+            MySqlCommand command = new MySqlCommand(query, _connection);
+            command.ExecuteNonQuery();
+            return command;
         }
 
         public MySqlDataReader ReadFrom(string tableName)
         {
-            _reader = Query("SELECT * FROM `" + tableName + "`").ExecuteReader();
-            return _reader;
+            return  Query("SELECT * FROM `" + tableName + "`").ExecuteReader();;
         }
-
-
     }
 }

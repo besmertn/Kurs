@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Text;
-using MySql.Data.MySqlClient;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
+using MySql.Data.MySqlClient;
 using NLog;
 
-namespace WindowsFormsApplication1
+namespace WindowsFormsApplication1.Controller
 {
     class UsersDbControl : DbControl
     {
         protected MD5 Md5Hash = MD5.Create();
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        public int CashRegisterNumber{set; get;}
+        public int CashRegisterNumber { set; get; }
+
         public void UpdateUsersDb()
         {
             const string path = @"usersDB.txt";
@@ -29,22 +30,23 @@ namespace WindowsFormsApplication1
                     string cashregisternumber = s.Substring(inx2 + 1, len - inx2 - 1);
                     try
                     {
-                        Query("INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`,`cashregisternumber`) VALUES (NULL,'" + login + "', '" + hash + "', " + cashregisternumber + ")");
-                        Query("INSERT INTO `checkcounter`(`cashregisternumber`, `checkcounter`) VALUES(" + cashregisternumber + ", 0)");
+                        Query(
+                            "INSERT INTO `Kurs`.`users` (`user_id`, `login`, `password`,`cashregisternumber`) VALUES (NULL,'" +
+                            login + "', '" + hash + "', " + cashregisternumber + ")");
+                        Query("INSERT INTO `checkcounter`(`cashregisternumber`, `checkcounter`) VALUES(" +
+                              cashregisternumber + ", 0)");
                     }
                     catch
                     {
                         Query("UPDATE `Kurs`.`users` SET `password`='" + hash + "' WHERE `login` = '" + login + "';");
                     }
-
-
-
                 }
             }
         }
+
+
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
-
             // Convert the input string to a byte array and compute the hash.
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
 
@@ -93,8 +95,8 @@ namespace WindowsFormsApplication1
             {
                 sw.WriteLine(result);
             }
-
         }
+
         public Boolean AuthorizeCheck(string login, string password)
         {
             _logger.Info(login);
@@ -104,7 +106,8 @@ namespace WindowsFormsApplication1
             {
                 while (reader.Read())
                 {
-                    if (reader.GetValue(1).ToString() == login && VerifyMd5Hash(Md5Hash, password, reader.GetString("password")))
+                    if (reader.GetValue(1).ToString() == login &&
+                        VerifyMd5Hash(Md5Hash, password, reader.GetString("password")))
                     {
                         CashRegisterNumber = reader.GetInt32("cashregisternumber");
                         _logger.Info(true);
@@ -114,6 +117,6 @@ namespace WindowsFormsApplication1
             }
             reader.Close();
             return false;
-        }      
+        }
     }
 }
